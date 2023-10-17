@@ -8,15 +8,31 @@ public class ForCube : MonoBehaviour
     public int a;
     public int b;
     public int c;
-    public GameObject Sphere;
-    public Text x;
+    public Text HPUI;
+    public int HP = 100;
     public float Speed = 10f;
     public int SMTH = 1;
-    // Start is called before the first frame update
-    void Start()
-    {
 
+    void OnTriggerStay(Collider Other)
+    {
+        Pushing();
     }
+    void OnTriggerEnter(Collider Other)
+    {
+        Pushing();
+    }
+
+    void Pushing()
+    {
+        HP = HP - 1;
+        if (HP <= 0)
+        {
+            SMTH = 0;
+            HP = 0;
+        }
+        HPUI.text = HP.ToString() + "%";
+    }
+
 
     // Update is called once per frame
     void FixedUpdate()
