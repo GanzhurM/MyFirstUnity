@@ -5,9 +5,7 @@ using UnityEngine.UI;
 
 public class ForCube : MonoBehaviour
 {
-    public int a;
-    public int b;
-    public int c;
+    public int a = 0;
     public Text HPUI;
     public int HP = 100;
     public float Speed = 10f;
@@ -15,11 +13,15 @@ public class ForCube : MonoBehaviour
 
     void OnTriggerStay(Collider Other)
     {
+        a = a + 1;
         Pushing();
+        Debug.Log("Столкновение с объектом продолжается! Всего в контакте " + a + " кадров!");
     }
     void OnTriggerEnter(Collider Other)
     {
+        a = a + 1;
         Pushing();
+        Debug.Log("Столкновение с объектом! Всего в контакте " + a + " кадров!");
     }
 
     void Pushing()
@@ -33,27 +35,32 @@ public class ForCube : MonoBehaviour
         HPUI.text = HP.ToString() + "%";
     }
 
-
-    // Update is called once per frame
     void FixedUpdate()
     {
         if (Input.GetKey(KeyCode.W))
         {
             transform.Translate(Vector3.forward * Speed * Time.deltaTime);
         }
-        else if (Input.GetKey(KeyCode.A))
+        if (Input.GetKey(KeyCode.A))
         {
             transform.Rotate(Vector3.down * 10 * Speed * Time.deltaTime);
         }
-        else if (Input.GetKey(KeyCode.S))
+        if (Input.GetKey(KeyCode.S))
         {
             transform.Translate(Vector3.back * Speed * Time.deltaTime);
         }
-        else if (Input.GetKey(KeyCode.D))
+        if (Input.GetKey(KeyCode.D))
         {
             transform.Rotate(Vector3.up * 10 * Speed * Time.deltaTime);
         }
 
+    }
+
+    void Start()
+    {
+        int b = 20, c = 60;
+        int d = b + c;
+        Debug.Log("Здравствуй, мир! Складываю переменную b, которая равна " + b + ", и переменную c, которая равна " + c + ". Ответ равен: " + d + ".");
     }
     public void Button()
     {
@@ -64,14 +71,16 @@ public class ForCube : MonoBehaviour
             renderer.material.shader = Shader.Find("Transparent/Diffuse");
             renderer.material.color = Color.white * 0.25f;
             Speed = 0f;
+            HP = 0;
         }
         else if (SMTH == 0)
         {
+            HP = 100;
             SMTH = 1;
             var renderer = this.gameObject.GetComponent<Renderer>();
             renderer.material.shader = Shader.Find("Transparent/Diffuse");
             renderer.material.color = Color.white * 1.0f;
-            Speed = 10f;
+            Speed = 0f;
         }
 
     }
